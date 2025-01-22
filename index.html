@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .matrix {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        .cell {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #333;
+            text-align: center;
+            font-size: 18px;
+            background-color: #fff;
+            cursor: pointer;
+        }
+        .marked {
+            background-color: #90EE90;
+        }
+        .input-section {
+            text-align: center;
+            margin: 20px;
+        }
+        input {
+            padding: 5px;
+            font-size: 16px;
+            width: 100px;
+        }
+        button {
+            padding: 5px 15px;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        #img {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px; /* Space between images */
+            justify-content: center; /* Center align images */
+        }
+
+        #img img {
+            max-width: 250px;
+            height: auto;
+            border-radius: 8px; /* Optional: rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #img img:hover {
+            transform: scale(1.05); /* Slight zoom effect */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="input-section">
+        <input type="number" id="numberInput" placeholder="Enter number">
+        <button onclick="markNumber()">Mark</button>
+        <button onclick="reset()">Reset</button>
+
+        <div id="matrixContainer"></div>
+
+        <br></br>
+            <label for="matrixSelector">Choose a matrix (Oclick below 👇):</label>
+            <select id="matrixSelector" onchange="changeMatrix()">
+                <option value="matrix1">Matrix 1</option>
+                <option value="matrix2">Matrix 2</option>
+                <option value="matrix3">Matrix 3</option>
+                <option value="matrix4">Matrix 4</option>
+                <option value="matrix5">Matrix 5</option>
+                <option value="matrix6">Matrix 6</option>
+                <option value="matrix7">Matrix 7</option>
+                <option value="matrix8">Matrix 8</option>
+                <option value="matrix9">Matrix 9</option>
+                <option value="matrix10">Matrix 10</option>
+                <option value="matrix10">Matrix 11</option>
+                <option value="matrix10">Matrix 12</option>
+                <option value="matrix10">Matrix 13</option>
+                <option value="matrix10">Matrix 14</option>
+                <option value="matrix10">Matrix 15</option>
+                <option value="matrix10">Matrix 16</option>
+            </select>
+        <br></br>
+    </div>
+    
+
+    <div id="img">
+        <img onclick="changeMatrix('matrix1')" src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.6435-9/50734592_2174102426238109_2119031942090326016_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_ohc=MZgWYnbF50oQ7kNvgEUIBFR&_nc_oc=AdihXY7JkElLIqdAp3x0XreSQHAoIN29uAsghPZLJEfleFEkoAISbM9FfvU769X8A-w&_nc_zt=23&_nc_ht=scontent.fsgn2-3.fna&_nc_gid=ApjIAxAK2r927RhRd0pUZRk&oh=00_AYCQjM78ok9gCFxeOaHIifhSuukQPwL_CqvieNHIqu7ZhQ&oe=67B7D030" alt="Matrix 1">1
+        <img onclick="changeMatrix('matrix2')" src="https://scontent.fsgn2-9.fna.fbcdn.net/v/t1.6435-9/50782958_2174101329571552_7298420222237605888_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_ohc=oY1SMftYqMwQ7kNvgF8hH3H&_nc_oc=AdjcVVIEPPZxRNHcTuBctpyizYS2brPQHF3kRBpeP0cW86Jh_d6tyROFO8XaqDyVCoU&_nc_zt=23&_nc_ht=scontent.fsgn2-9.fna&_nc_gid=A8hu3Pxs377DE_KRqDZwWvy&oh=00_AYBx6NlobHA4U5fJOsHOlWOFFCm8Wxwo3-XsBnXdRGieJg&oe=67B7C8DA" alt="Matrix 2">2
+        <img onclick="changeMatrix('matrix3')" src="https://scontent.fsgn2-7.fna.fbcdn.net/v/t1.6435-9/50804117_2174101209571564_6434854684451667968_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_ohc=ivK1oUTF6eMQ7kNvgGV43-8&_nc_oc=Adj7urHZadQKUHg_t0pEzWVnNj4Un6RWDGvHK_3XKSDc-WiJhTmRE7kunmdzHojgGOE&_nc_zt=23&_nc_ht=scontent.fsgn2-7.fna&_nc_gid=AwIIglHdk_3UnTAGhKttnW3&oh=00_AYDN4LilwQFKaEhoRFzm4vBNqaeJJwI2vAfgZ0isThzidA&oe=67B7D311" alt="Matrix 3">3
+        <img onclick="changeMatrix('matrix4')" src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.6435-9/50866817_2174102379571447_8945224328358658048_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_ohc=wfHBr_S4tu0Q7kNvgEfwf4Q&_nc_oc=Adj8f5dIYde5rq8_HGZlo-rER8B9FtSSuPvS45WnRXk5TZmKG7VE5YG1mnzOt9on-g0&_nc_zt=23&_nc_ht=scontent.fsgn2-3.fna&_nc_gid=Ajp3jHIf978wYaiartH3r8L&oh=00_AYApaGyL_mZIO_PUHmuOdDtnlecJJ90vUng3XmUrGlIcFA&oe=67B7BEFE" alt="Matrix 4">4
+        <img onclick="changeMatrix('matrix5')" src="https://scontent.fsgn2-4.fna.fbcdn.net/v/t1.6435-9/50940246_2174101276238224_3179176724264910848_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_ohc=HbayNee_IhIQ7kNvgG_wuI9&_nc_oc=Adjc31InxXD4-EkWG_CJwnYFCW8UeuZ1BMwWriSHtqNLC9F1G1BVsvbvwO8Wc6CLVSg&_nc_zt=23&_nc_ht=scontent.fsgn2-4.fna&_nc_gid=AS0EJ-xWVZCgJ-KxH1Uc_G2&oh=00_AYACK_sQB5Fk4xbz5vLLLiVTGZshmnjGVoR9zetFjeJDMw&oe=67B7ECA2" alt="Matrix 5">5
+        <img onclick="changeMatrix('matrix6')" src="https://scontent.fsgn2-4.fna.fbcdn.net/v/t1.6435-9/50940368_2174101856238166_156600679480164352_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_ohc=0NT1gOQfRqgQ7kNvgEqoAd_&_nc_oc=AdjMFSZW987DYd9_w89hmPe_84WvzHQv-h2jXnme6x1falhYl239mo_pdzfWK8_qKrM&_nc_zt=23&_nc_ht=scontent.fsgn2-4.fna&_nc_gid=Aisf2dunLZa1XX2TXeIpIp4&oh=00_AYD5RRj7sZ7AbY8mnzWWdPkHz9heRPMUcydknV2x-Zc-tw&oe=67B7CB9F" alt="Matrix 6">6
+        <img onclick="changeMatrix('matrix7')" src="https://scontent.fsgn2-7.fna.fbcdn.net/v/t1.6435-9/50962021_2174102226238129_7880112807348273152_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_ohc=MJRc97GKLWgQ7kNvgFXnyTn&_nc_oc=AdiXA1mH86w8V_Pj4MlVoBE_O9GMcZjAgzVw6cyWXzGV7lbAiI1JH-37NISfpTX_UVY&_nc_zt=23&_nc_ht=scontent.fsgn2-7.fna&_nc_gid=A_xKsvqSxlgdpTAUrH2-4Oa&oh=00_AYBzI-7WBp9-I7ZNyARIud-yd4k8mtzTc-MAMPu5s9FZ-w&oe=67B7CFF9" alt="Matrix 7">7
+        <img onclick="changeMatrix('matrix8')" src="https://scontent.fsgn2-5.fna.fbcdn.net/v/t1.6435-9/50979528_2174102102904808_1192148583382515712_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_ohc=A2BzpkcngogQ7kNvgEKf6Ej&_nc_oc=AdiDHB8YBwXZiXy0BbEiYazVkiRb8ZUMvF2ov9LBuCqdYJM4d4GSVShKJC_bQO0wuYE&_nc_zt=23&_nc_ht=scontent.fsgn2-5.fna&_nc_gid=Aj0GnokyBeVrFN2rOlxOW5H&oh=00_AYB1a-YyEOv9P0poF_eaCNJb7upyrztXczczjvSptDQ8ZA&oe=67B7EAB4" alt="Matrix 8">8
+        <img onclick="changeMatrix('matrix9')" src="https://scontent.fsgn2-11.fna.fbcdn.net/v/t1.6435-9/51017164_2174102159571469_749570976831766528_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_ohc=2D4g1fuKF9oQ7kNvgFiP9HG&_nc_oc=AdhYpXTwWf8UbSmiaeyjYWqZLHuNPNxat-K2aRmJh7Nlw-fD9FvxQZgw6EkN1L6ddqM&_nc_zt=23&_nc_ht=scontent.fsgn2-11.fna&_nc_gid=AnBCYqCT3rAqAeaYC6-S0mP&oh=00_AYBnDsjTBPxWW-L5DQIv4D4UQIzNcgwWd1xHu43JdWKmOQ&oe=67B7CCC1" alt="Matrix 9">9
+        <img onclick="changeMatrix('matrix10')" src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.6435-9/51026277_2174101902904828_5252259040343359488_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_ohc=H1cPwFsPosgQ7kNvgFldNQt&_nc_oc=AdhOBO2ecLBCKFn6bSltcwgKgsptyX63sh-Ibvw4Kd1HHNVG1EuElkbsR_VaKThwTjA&_nc_zt=23&_nc_ht=scontent.fsgn2-3.fna&_nc_gid=ACtRLunjWrWlwv30-NH5Ww2&oh=00_AYD5OVORes0350qI5rpAJrLLatEl05rhnpwRFROeuHSZSw&oe=67B7F3B2" alt="Matrix 10">10
+        <img onclick="changeMatrix('matrix11')" src="https://scontent.fsgn2-9.fna.fbcdn.net/v/t1.6435-9/51144999_2174102016238150_5408969323093950464_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_ohc=V6Q7GYgzFywQ7kNvgFwhIT6&_nc_oc=AdjE4g7tdsfG9tIviy8Ll1AL3K-HO2LyLBmtx7SQUbdZvdfm37H8jIGzNVqXeOmOdi8&_nc_zt=23&_nc_ht=scontent.fsgn2-9.fna&_nc_gid=ABWGdV_RX-P7RUs0_64NVCo&oh=00_AYDmqGW6UpZAeyM26t3W2QeTN7Vihk7sMvy_etl5P7b86Q&oe=67B827F0" alt="Matrix 10">11
+        <img onclick="changeMatrix('matrix12')" src="https://scontent.fsgn2-5.fna.fbcdn.net/v/t1.6435-9/51152758_2174102262904792_2209350019083927552_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_ohc=KBfwtZNEfBEQ7kNvgE07JVB&_nc_oc=AdjYqHOJDYpBkeqS-xlHJqniT4VdXNUce4Poz0ACaXzEv_c5QO5kwe0qCginLwimcgA&_nc_zt=23&_nc_ht=scontent.fsgn2-5.fna&_nc_gid=Ad8zBrOQXMDEdZAHlblqDJ8&oh=00_AYDbBGjTCu6P2rFBAyp1vO2RWZdom3oV1o6abQ2RkXQe9Q&oe=67B80FF3" alt="Matrix 10">12
+        <img onclick="changeMatrix('matrix13')" src="https://scontent.fsgn2-9.fna.fbcdn.net/v/t1.6435-9/51206965_2174101076238244_5021064043176132608_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_ohc=aE_dCfzoY7IQ7kNvgFyhRJS&_nc_oc=Adj1lf6n90gSMnXz-WtpocpXVrpRxHYRLdVKkat7lIdM6HZIPQTp8lpERerDrAndF4o&_nc_zt=23&_nc_ht=scontent.fsgn2-9.fna&_nc_gid=AKLo5ghOSgjjpUHvJfvMKL4&oh=00_AYAlYhGAklzBh6pvL_nI5qKg_Jw9xiP7Sk6EQjbFcqgg9w&oe=67B80683" alt="Matrix 10">13
+        <img onclick="changeMatrix('matrix14')" src="https://scontent.fsgn2-6.fna.fbcdn.net/v/t1.6435-9/51332194_2174101959571489_7899735400527167488_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=127cfc&_nc_ohc=dPiYVJweEuAQ7kNvgE6tIRt&_nc_oc=AdhWtQFN92xixxXzIGd63CdfuO6oI2AKrDt0PBOapHXBSmEhD0-CRYnKHzZ23RbxivI&_nc_zt=23&_nc_ht=scontent.fsgn2-6.fna&_nc_gid=AZi0N1q9EX7HgEL5VLJP2KF&oh=00_AYA4985ymvivb1y4-IIwuhdOR9jAvWF3xXocCMMzaiLgPA&oe=67B8238A" alt="Matrix 10">14
+        <img onclick="changeMatrix('matrix15')" src="https://scontent.fsgn2-7.fna.fbcdn.net/v/t1.6435-9/51378288_2174101379571547_466345581904658432_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_ohc=aZ6Hly9Gm7EQ7kNvgE2VXnm&_nc_oc=Adh-M_ybMkhTEJAFtVTWITxARe26TUED-srg0X_xNEegULfXctZhxCAYx2JmcegN2E8&_nc_zt=23&_nc_ht=scontent.fsgn2-7.fna&_nc_gid=A1wkkD70EPHIV9gPX7AU2IX&oh=00_AYBDjW1JuqMXckds061FzTo6Ddp5AJewR6dkUrlQBkc48Q&oe=67B828D6" alt="Matrix 10">15
+        <img onclick="changeMatrix('matrix16')" src="https://scontent.fsgn2-8.fna.fbcdn.net/v/t1.6435-9/51423728_2174102046238147_5864122791455883264_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_ohc=A5PZsQCg6V0Q7kNvgHCv0E2&_nc_oc=AdhMvWHX_N3Pr9kusowAQaG6jDAHNU8ty8HFEOkodCmAky7md3M0L8-b6V6dk-Yt5Sk&_nc_zt=23&_nc_ht=scontent.fsgn2-8.fna&_nc_gid=A-ZF7VpoaWv9IkwDKRLLkb_&oh=00_AYBTSyJCOSckmYz5Wd1Fruv-EaNSoId573hA2LO-TU3LCg&oe=67B7F741" alt="Matrix 10">16
+    </div>
+
+
+    <script>
+        const matrices = {
+            matrix1: [
+                [9, 25, 38, 53, 86],
+                [15, 36, 51, 64, 90],
+                [2, 28, 47, 66, 78],
+                [5, 10, 41, 56, 72],
+                [4, 22, 33, 54, 74],
+                [13, 26, 40, 61, 82],
+                [6, 29, 30, 58, 62],
+                [21, 43, 52, 75, 84],
+                [6, 18, 32, 69, 70],
+            ],
+            matrix2: [
+                [5, 29, 30, 56, 80],
+                [10, 35, 54, 63, 81],
+                [4, 26, 45, 61, 79],
+                [3, 14, 43, 50, 71],
+                [7, 23, 31, 52, 73],
+                [11, 28, 49, 69, 89],
+                [1, 24, 34, 53, 67],
+                [27, 40, 57, 76, 87],
+                [1, 16, 33, 65, 78],
+            ],
+            matrix3: [
+                [18, 22, 55, 76, 87],
+                [12, 38, 40, 66, 82],
+                [1, 27, 42, 73, 85],
+                [10, 34, 56, 63, 80],
+                [6, 35, 43, 64, 71],
+                [13, 21, 54, 74, 90],
+                [7, 24, 32, 53, 67],
+                [2, 36, 47, 65, 72],
+                [11, 23, 45, 51, 81],
+            ],
+            matrix4: [
+                [11, 35, 59, 68, 80],
+                [17, 24, 42, 57, 76],
+                [1, 27, 48, 79, 81],
+                [7, 16, 31, 65, 77],
+                [23, 44, 50, 71, 85],
+                [14, 37, 49, 63, 88],
+                [3, 20, 46, 67, 73],
+                [8, 12, 34, 45, 87],
+                [19, 39, 55, 60, 89],
+            ],
+            matrix5: [
+                [19, 32, 58, 64, 84],
+                [13, 20, 48, 55, 77],
+                [2, 21, 46, 75, 82],
+                [6, 18, 39, 62, 70],
+                [25, 41, 59, 74, 83],
+                [17, 38, 44, 60, 86],
+                [8, 22, 47, 66, 72],
+                [9, 12, 37, 42, 88],
+                [15, 36, 51, 68, 90],
+            ],
+            matrix6: [
+                [14, 28, 50, 75, 90],
+                [19, 31, 49, 68, 81],
+                [5, 20, 47, 77, 84],
+                [1, 12, 38, 55, 69],
+                [1, 36, 41, 66, 71],
+                [18, 26, 57, 70, 88],
+                [8, 25, 33, 52, 62],
+                [9, 35, 46, 60, 73],
+                [10, 27, 48, 59, 86],
+            ],
+            matrix7: [
+                [13, 22, 41, 61, 86],
+                [3, 24, 34, 52, 71],
+                [1, 35, 56, 64, 83],
+                [7, 23, 36, 53, 75],
+                [5, 48, 59, 72, 84],
+                [14, 28, 42, 60, 87],
+                [4, 26, 47, 50, 79],
+                [4, 10, 30, 49, 66],
+                [15, 25, 51, 76, 81],
+            ],
+            matrix8: [
+                [16, 28, 45, 68, 87],
+                [4, 29, 35, 55, 73],
+                [9, 30, 54, 62, 88],
+                [1, 21, 33, 52, 76],
+                [8, 40, 50, 79, 81],
+                [11, 20, 46, 63, 83],
+                [2, 27, 49, 59, 72],
+                [2, 19, 32, 48, 67],
+                [14, 22, 57, 78, 90],
+            ],
+            matrix9: [
+                [6, 18, 47, 69, 86],
+                [13, 31, 44, 61, 70],
+                [7, 24, 34, 56, 71],
+                [5, 23, 41, 65, 74],
+                [10, 37, 53, 60, 89],
+                [17, 38, 42, 75, 84],
+                [15, 25, 51, 77, 85],
+                [12, 36, 43, 64, 82],
+                [3, 26, 39, 58, 66],
+            ],
+            matrix10: [
+                [12, 34, 40, 75, 89],
+                [8, 16, 42, 55, 77],
+                [5, 24, 33, 67, 83],
+                [14, 27, 51, 78, 84],
+                [18, 38, 46, 63, 81],
+                [9, 47, 66, 79, 86],
+                [4, 28, 31, 57, 72],
+                [17, 36, 52, 64, 80],
+                [19, 23, 45, 62, 74],
+            ],
+            matrix11: [
+                [7, 16, 32, 66, 73],
+                [18, 29, 46, 55, 88],
+                [2, 23, 34, 50, 75],
+                [4, 30, 40, 61, 78],
+                [10, 27, 41, 56, 86],
+                [20, 39, 59, 60, 83],
+                [9, 24, 51, 64, 81],
+                [3, 28, 48, 53, 80],
+                [17, 37, 45, 63, 77]
+            ],
+            matrix12: [
+                [9, 16, 46, 65, 80],
+                [11, 32, 45, 68, 78],
+                [8, 21, 33, 57, 73],
+                [6, 20, 43, 63, 77],
+                [12, 31, 54, 62, 85],
+                [19, 39, 40, 70, 82],
+                [18, 29, 58, 74, 90],
+                [17, 38, 44, 69, 88],
+                [2, 27, 37, 55, 67]
+            ],
+            matrix13: [
+                [19, 28, 46, 68, 75],
+                [5, 26, 39, 58, 78],
+                [14, 37, 50, 69, 84],
+                [3, 25, 57, 60, 86],
+                [16, 31, 49, 77, 89],
+                [8, 17, 48, 59, 79],
+                [15, 20, 44, 52, 70],
+                [4, 33, 41, 61, 83],
+                [9, 29, 30, 62, 88]
+            ],
+            matrix14: [
+                [3, 15, 32, 60, 71],
+                [10, 20, 43, 54, 85],
+                [2, 26, 35, 59, 76],
+                [6, 39, 49, 68, 73],
+                [13, 29, 48, 50, 88],
+                [22, 30, 53, 65, 82],
+                [1, 25, 58, 69, 90],
+                [7, 21, 41, 56, 87],
+                [11, 37, 44, 61, 70]
+            ],
+            matrix15: [
+                [15, 24, 44, 64, 79],
+                [4, 29, 30, 51, 76],
+                [17, 32, 53, 63, 80],
+                [7, 23, 56, 61, 85],
+                [11, 34, 42, 72, 87],
+                [3, 13, 45, 54, 74],
+                [16, 21, 43, 58, 78],
+                [6, 37, 40, 65, 82],
+                [2, 22, 39, 67, 83]
+            ],
+            matrix16: [
+                [19, 35, 49, 71, 85],
+                [8, 14, 47, 54, 74],
+                [6, 25, 36, 62, 84],
+                [15, 22, 58, 70, 89],
+                [12, 31, 43, 68, 90],
+                [1, 42, 65, 72, 87],
+                [5, 21, 38, 52, 76],
+                [13, 33, 57, 67, 82],
+                [11, 26, 44, 69, 79]
+            ]
+
+        };
+        let matrix = matrices.matrix1;
+
+        function changeMatrix(value) {
+            const selector = document.getElementById('matrixSelector');
+            const selectedMatrix = selector.value;
+            
+            if(value){
+                matrix = matrices[value];
+                selector.value = value;
+            }else{
+                matrix = matrices[selectedMatrix];
+            }
+            createMatrix();
+        }
+
+        function createMatrix() {
+            const container = document.getElementById('matrixContainer');
+            const table = document.createElement('table');
+            table.className = 'matrix';
+
+            matrix.forEach((row, i) => {
+                const tr = document.createElement('tr');
+                row.forEach((num, j) => {
+                    const td = document.createElement('td');
+                    td.className = 'cell';
+                    td.textContent = num;
+                    td.onclick = () => toggleCell(td);
+                    tr.appendChild(td);
+                });
+                table.appendChild(tr);
+            });
+
+            container.innerHTML = '';
+            container.appendChild(table);
+        }
+
+        function markNumber() {
+            const input = document.getElementById('numberInput');
+            const number = parseInt(input.value);
+            let found = false;
+
+            document.querySelectorAll('.cell').forEach(cell => {
+                if (parseInt(cell.textContent) === number) {
+                    cell.classList.add('marked');
+                    found = true;
+                }
+            });
+
+            input.value = '';
+            if (!found) {
+               
+            }
+        }
+
+        function toggleCell(cell) {
+            cell.classList.toggle('marked');
+        }
+
+        function reset() {
+            document.querySelectorAll('.cell').forEach(cell => {
+                cell.classList.remove('marked');
+            });
+        }
+
+        // Initialize the matrix when page loads
+        createMatrix();
+
+        // Add event listener for Enter key
+        document.getElementById('numberInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                markNumber();
+            }
+        });
+
+
+        
+    </script>
+</body>
+</html>
